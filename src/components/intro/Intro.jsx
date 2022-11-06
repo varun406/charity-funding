@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const Intro = () => {
-  const [balance, setbal] = useState();
-  const [walletBalance, setWalletBalance] = useState("");
   const [userAddress, setUserAddress] = useState("");
 
   function handleClick() {
@@ -61,7 +59,7 @@ const Intro = () => {
         <BgImage src="./assets/helping.jpg" />
         <HeadingGroup>
           <Title>Helping Millions</Title>
-          <Content>Fighting isolation,proverty,neglect</Content>
+          <Content>Fighting isolation & proverty</Content>
         </HeadingGroup>
       </Wrapper>
     </Container>
@@ -83,20 +81,27 @@ const Wrapper = styled.div`
 `;
 
 const HeadingGroup = styled.div`
-  width: 45%;
+  width: 50%;
   z-index: 9;
   position: absolute;
-  top: 100px;
-  line-height: 1.2;
+  top: 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const Title = styled.h1`
-  font-size: 50px;
+  font-size: 5rem;
+  line-height: 1.2;
+  font-family: "Inter", sans-serif;
 `;
+
 const Content = styled.h3`
-  width: 50%;
-  font-size: 25px;
+  width: 60%;
+  font-size: 2.6rem;
   font-weight: 500;
+  font-family: "Pacifico", cursive;
 `;
 const BgImage = styled.img`
   width: 100%;

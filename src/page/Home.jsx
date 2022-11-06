@@ -288,7 +288,7 @@ export default Home;
 const Container = styled.div`
   position: relative;
   width: 100vw;
-  height: 100vh;
+  padding-bottom: 20px;
 `;
 
 const Wrapper = styled.div`

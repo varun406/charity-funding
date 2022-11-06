@@ -1,10 +1,25 @@
 import { AccessTimeFilled, People } from "@mui/icons-material";
 import { LinearProgress } from "@mui/material";
+import { ethers } from "ethers";
+import { useState } from "react";
 import styled from "styled-components";
 
 const DonationCard = ({ CampaignData, contract }) => {
-  const donateButton = async (currentAddress) => {
-    await contract.deposit(currentAddress);
+  const [ethAmount, setEthAmount] = useState();
+
+  const donateButton = async (currentAddress, raised) => {
+    if (ethAmount <= raised) {
+      await contract.deposit(currentAddress, {
+        //NOTE: DEPOSIT
+        value: ethers.utils.parseEther(ethAmount),
+      });
+    } else {
+      alert("amount is greater than the actual target!");
+    }
+  };
+
+  const handleChange = (e) => {
+    setEthAmount(e.target.value);
   };
 
   return (
@@ -70,9 +85,18 @@ const DonationCard = ({ CampaignData, contract }) => {
                   </PeopleDonated>
                 </TimeSection>
                 <ButtonSection>
-                  <EthInput type="number" placeholder="Enter Eth..." />
+                  <EthInput
+                    onChange={handleChange}
+                    type="number"
+                    placeholder="Enter Eth..."
+                  />
                   <DonateButton
-                    onClick={() => donateButton(data?.walletAddress)}
+                    onClick={() =>
+                      donateButton(
+                        data?.walletAddress,
+                        parseInt(data?.amount) / 1000000000000000000
+                      )
+                    }
                   >
                     Donate
                   </DonateButton>
@@ -90,7 +114,7 @@ export default DonationCard;
 
 const Container = styled.div`
   width: 250px;
-  height: 350px;
+  height: 360px;
   display: grid;
   place-items: center;
   /* border: 5px solid #eaf3fa; */
@@ -209,28 +233,30 @@ const PeopleDonated = styled(DaysLeft)`
 const ButtonSection = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
 const DonateButton = styled.button`
-  width: 300px;
+  width: 130px;
   height: 30px;
   font-size: 18px;
   font-weight: bold;
   color: white;
-  border-radius: 20px;
+  border-radius: 7px;
   background-color: #3b7fd2;
   outline: none;
   border: none;
+  cursor: pointer;
 `;
 
 const EthInput = styled.input`
-  width: 200px;
+  width: 80px;
   height: 30px;
   border-right: none;
   padding: 5px;
   border-radius: 7px;
   font-weight: 500;
   outline: none;
+  border: 1px solid black;
 `;
